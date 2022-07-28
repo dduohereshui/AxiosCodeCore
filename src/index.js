@@ -12,7 +12,53 @@ const btn = document.getElementById("send");
 const instance = axios.create({
   baseURL: "http://localhost:3000/",
 });
-instance.get("/getUser", {
-  method: "get",
-  timeout: 4000,
-});
+
+// console.dir(instance);
+instance.interceptors.request.use(
+  (config) => {
+    console.log("1 request interceptor");
+    return config;
+  },
+  (err) => {
+    return err;
+  }
+);
+instance.interceptors.request.use(
+  (config) => {
+    console.log("2 request interceptor");
+
+    return config;
+  },
+  (err) => {
+    return err;
+  }
+);
+
+instance.interceptors.response.use(
+  (response) => {
+    console.log("1 response interceptor");
+    return response;
+  },
+  (err) => {
+    return err;
+  }
+);
+instance.interceptors.response.use(
+  (response) => {
+    console.log("2 response interceptor");
+
+    return response;
+  },
+  (err) => {
+    return err;
+  }
+);
+instance
+  .get({
+    url: "/getUser",
+    method: "get",
+    timeout: 4000,
+  })
+  .then((res) => {
+    console.log(res);
+  });
